@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from utils import load_data, get_post, show_comments, search
+from utils import load_data, get_post, show_comments, search_posts, get_user_feed
 
 
 app = Flask(__name__)
@@ -11,17 +11,29 @@ def main_page():
     return render_template("index.html", data=data)
 
 
-@app.route("/posts/<int:post_id>")         # не отображается значок глаза, неправильные пути
+@app.route("/posts/<int:post_id>")
 def show_post(post_id):
     post = get_post(post_id)
     comments = show_comments(post_id)
     return render_template("post.html", post=post, comments=comments)
 
 
-@app.route("/search/")  # пока не работает
-def search_by_name():
-    search_key = request.args.get("search")
-    posts = search(search_key)
+@app.route("/search/", methods=["GET"])
+def search_page():
+    search_key = request.args.get("s")
+    posts = search_posts(search_key)
     return render_template("search.html", posts=posts, search_key=search_key)
+
+
+@app.route("/user-feed/<username>")
+def user_feed(username):
+    user_posts = get_user_feed(username)
+    return render_template("user-feed.html", username=username, user_posts=user_posts)
+
+
+@app.route("/tags")
+def get_tags():
+    pass
+
 
 app.run(debug=True)

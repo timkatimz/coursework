@@ -6,6 +6,7 @@ def load_data():
         data = json.load(file)
         return data
 
+
 def get_post(post_id):
     for post in load_data():
         if post_id == post["pk"]:
@@ -26,9 +27,19 @@ def show_comments(post_id):
     return comments
 
 
-def search(search_key):
+def search_posts(search_key):
     found_posts = []
     for post in load_data():
         if search_key in post["content"] and len(search_key) > 0:
             found_posts.append(post)
+        else:
+            return ""
     return found_posts
+
+
+def get_user_feed(username):
+    user_posts = []
+    for post in load_data():
+        if username == post["poster_name"]:
+            user_posts.append(post)
+    return user_posts
