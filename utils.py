@@ -1,24 +1,10 @@
 import json
 
-import requests as requests
-
 
 def load_data():
     with open("data/data.json", "r", encoding="utf-8") as file:
         data = json.load(file)
         return data
-
-
-def api_posts():
-    with open("data/data.json", "r", encoding="utf-8") as file:
-        data = file.read()
-        return data
-
-
-def api_post(post_id):
-    for post in load_data():
-        if post_id == post["pk"]:
-            return post
 
 
 def get_post(post_id):
