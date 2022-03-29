@@ -1,10 +1,24 @@
 import json
 
+import requests as requests
+
 
 def load_data():
     with open("data/data.json", "r", encoding="utf-8") as file:
         data = json.load(file)
         return data
+
+
+def api_posts():
+    with open("data/data.json", "r", encoding="utf-8") as file:
+        data = file.read()
+        return data
+
+
+def api_post(post_id):
+    for post in load_data():
+        if post_id == post["pk"]:
+            return post
 
 
 def get_post(post_id):
@@ -32,8 +46,6 @@ def search_posts(search_key):
     for post in load_data():
         if search_key in post["content"] and len(search_key) > 0:
             found_posts.append(post)
-        else:
-            return ""
     return found_posts
 
 
@@ -43,3 +55,5 @@ def get_user_feed(username):
         if username == post["poster_name"]:
             user_posts.append(post)
     return user_posts
+
+

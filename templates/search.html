@@ -26,13 +26,12 @@
 
   <main class="container">
     <div class="search">
-      <form action="/search/{{ search_key }}" class="search__form">
-          <label>
-              <input type="search"  class="search__input">
-          </label>
+      <form action="/search" class="search__form">
+          <input type="search" name="s" class="search__input">
       </form>
       <p class="search__results">Найдено постов: {{posts|length}}</p>
     </div>
+
     <section class="items">
       {% for post in posts %}
       <div class="items__item item">

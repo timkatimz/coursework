@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from utils import load_data, get_post, show_comments, search_posts, get_user_feed
+from utils import load_data, get_post, show_comments, search_posts, get_user_feed, api_posts, api_post
 
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ def show_post(post_id):
     return render_template("post.html", post=post, comments=comments)
 
 
-@app.route("/search/", methods=["GET"])
+@app.route("/search/")
 def search_page():
     search_key = request.args.get("s")
     posts = search_posts(search_key)
@@ -31,9 +31,16 @@ def user_feed(username):
     return render_template("user-feed.html", username=username, user_posts=user_posts)
 
 
-@app.route("/tags")
-def get_tags():
-    pass
+@app.route("/api/posts/")
+def get_posts_json():
+    all_posts = api_posts()
+    return f"<pre>{all_posts}</pre>"
+
+
+@app.route("/api/posts/<int:post_id>")
+def get_select_post(post_id):
+    post = api_post(post_id)
+    return f"<pre>{post}</pre>"
 
 
 app.run(debug=True)
