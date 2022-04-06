@@ -13,6 +13,7 @@ def get_post(post_id):
             return post
 
 
+
 def load_comments():
     with open("data/comments.json", "r", encoding="utf-8") as file:
         data = json.load(file)
@@ -25,6 +26,10 @@ def show_comments(post_id):
         if post_id == comment["post_id"]:
             comments.append(comment)
     return comments
+
+for i in show_comments(7):
+    print(i["pk"])
+
 
 
 def search_posts(search_key):
@@ -41,5 +46,3 @@ def get_user_feed(username):
         if username == post["poster_name"]:
             user_posts.append(post)
     return user_posts
-
-

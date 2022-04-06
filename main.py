@@ -2,8 +2,8 @@ from flask import Flask, request, render_template
 from utils import load_data, get_post, show_comments, search_posts, get_user_feed
 from api.views import api
 
-
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 data = load_data()
 app.register_blueprint(api)
 
@@ -33,6 +33,5 @@ def user_feed(username):
     return render_template("user-feed.html", username=username, user_posts=user_posts)
 
 
-app.run(debug=True)
-
-
+if __name__ == "__main__":
+    app.run()
