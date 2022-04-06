@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from utils import load_data, get_post, show_comments, search_posts, get_user_feed
+from utils import load_data, get_post, show_comments, search_posts, get_user_feed, posts_by_tag
 from api.views import api
 
 app = Flask(__name__)
@@ -31,6 +31,12 @@ def search_page():
 def user_feed(username):
     user_posts = get_user_feed(username)
     return render_template("user-feed.html", username=username, user_posts=user_posts)
+
+
+@app.route("/tag/<tagname>")
+def post_by_tag(tagname):
+    posts = posts_by_tag(tagname)
+    return render_template("tag.html", posts=posts, tagname=tagname)
 
 
 if __name__ == "__main__":
