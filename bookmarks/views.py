@@ -1,7 +1,6 @@
 from bookmarks.utils import add_bookmark, remove_bookmark
 from utils import get_post
-from flask import Blueprint, redirect
-
+from flask import Blueprint, redirect, render_template
 
 bookmarks = Blueprint("bookmarks", __name__, url_prefix="/bookmarks")
 
@@ -17,3 +16,5 @@ def add_bookmarks(post_id):
 def remove_bookmarks(post_id):
     remove_bookmark(post_id)
     return redirect("/", code=302)
+
+

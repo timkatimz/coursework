@@ -1,26 +1,26 @@
 from flask import Flask, request, render_template
-from utils import load_data, get_post, show_comments, search_posts, get_user_feed, posts_by_tag
+from utils import load_data, get_post, show_comments, search_posts, get_user_feed, posts_by_tag, load_bookmarks
 from api.views import api
 from bookmarks.views import bookmarks
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
-data = load_data()
-app.config["BOOKMARKS_PATH"] = "data/bookmarks.json"
 app.register_blueprint(api)
 app.register_blueprint(bookmarks)
 
 
 @app.route("/")
 def main_page():
-    return render_template("index.html", data=data)
+    data = load_data()
+    bookmarks_count = load_bookmarks()
+    return render_template("index.html", data=data, bookmarks_count=bookmarks_count)
 
 
 @app.route("/posts/<int:post_id>")
 def show_post(post_id):
     post = get_post(post_id)
     comments = show_comments(post_id)
-    return render_template("post.html", post=post, comments=comments)
+    return render_template("post.html", post=post, comments=comments, )
 
 
 @app.route("/search/")
@@ -42,6 +42,10 @@ def post_by_tag(tagname):
     return render_template("tag.html", posts=posts, tagname=tagname)
 
 
+@app.route("/bookmarks/")
+def show_bookmarks():
+    posts = load_bookmarks()
+    return render_template("bookmarks.html", posts=posts)
 
 
 if __name__ == "__main__":

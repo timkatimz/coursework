@@ -51,3 +51,9 @@ def posts_by_tag(tagname):
         if f"#{tag}" in post["content"]:
             posts.append(post)
     return posts
+
+
+def load_bookmarks():
+    with open("data/bookmarks.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+        return data
