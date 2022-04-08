@@ -1,18 +1,19 @@
-import json
+from bookmarks.utils import add_bookmark, remove_bookmark
+from utils import get_post
+from flask import Blueprint, redirect
 
-from flask import Blueprint
 
 bookmarks = Blueprint("bookmarks", __name__, url_prefix="/bookmarks")
 
 
-@bookmarks.route("/add/<post_id>")
+@bookmarks.route("/add/<int:post_id>")
 def add_bookmarks(post_id):
-    data = get_post(post_id)
-    with open("../data/bookmarks.json", "rw", encoding="utf8") as file:
-        json.dump(data, file, ensure_ascii=False)
+    post = get_post(post_id)
+    add_bookmark(post)
+    return redirect("/", code=302)
 
 
-
-@bookmarks.route("/remove/<post_id>")
+@bookmarks.route("/remove/<int:post_id>")
 def remove_bookmarks(post_id):
-    pass
+    remove_bookmark(post_id)
+    return redirect("/", code=302)

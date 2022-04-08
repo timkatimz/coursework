@@ -1,11 +1,14 @@
 from flask import Flask, request, render_template
 from utils import load_data, get_post, show_comments, search_posts, get_user_feed, posts_by_tag
 from api.views import api
+from bookmarks.views import bookmarks
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 data = load_data()
+app.config["BOOKMARKS_PATH"] = "data/bookmarks.json"
 app.register_blueprint(api)
+app.register_blueprint(bookmarks)
 
 
 @app.route("/")
